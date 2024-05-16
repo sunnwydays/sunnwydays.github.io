@@ -60,7 +60,7 @@ export default function Card(props) {
               <p className="emoji">{GetEmoji(dailyCode[day])}</p>
               <p className="temperature">{dailyPrecipitation[day]} mm</p>
               <p className="temperature">{dailyWind[day].toFixed(0)} km/h</p>
-              <p className="temperature" style={{ transform: `rotate(${dailyDirection[day]}deg)` }}>{(day === 0) ? "🡱" : "🡡"}</p>
+              <p className="temperature" style={{ transform: `rotate(${dailyDirection[day]}deg)` }}>⬆️</p>
               <p className="temperature">{(dailyDuration[day] / 3600).toFixed(1)} h</p>
             </div>
           </div>
@@ -84,7 +84,7 @@ export default function Card(props) {
                 <p className="emoji">{GetEmoji(hourlyCode[index + 24 * day])}</p>
                 <p className="temperature">{hourlyPrecipitation[index + 24 * day]} mm</p>
                 <p className="temperature">{hourlyWind[index + 24 * day].toFixed(0)} km/h</p>
-                <p className="temperature" style={{ transform: `rotate(${hourlyDirection[index + 24 * day]}deg)` }}>{(index === hour && day === 0) ? "🡱" : "🡡"}</p>
+                <p className="temperature" style={{ transform: `rotate(${hourlyDirection[index + 24 * day]}deg)` }}>⬆️</p>
                 <p className="temperature">{hourlyHumidity[index + 24 * day]}%</p>
               </div>
             ))}

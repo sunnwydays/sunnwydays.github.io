@@ -46,7 +46,7 @@ export default function Card(props) {
               <p className="emoji">{GetEmoji(dailyCode[index])}</p>
               <p className="temperature">{dailyPrecipitation[index]} mm</p>
               <p className="temperature">{dailyWind[index].toFixed(0)} km/h</p>
-              <p className="temperature" style={{ transform: `rotate(${dailyDirection[index]}deg)` }}>{(index === 0) ? "🡱" : "🡡"}</p>
+              <p className="temperature" style={{ transform: `rotate(${dailyDirection[index]}deg)` }}>⬆️</p>
               <p className="temperature">{(dailyDuration[index] / 3600).toFixed(1)} h</p>
             </div>
           ))}
