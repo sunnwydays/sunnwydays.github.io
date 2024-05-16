@@ -2,13 +2,6 @@
 
 The weather is important for when I go outside so I know what to wear and if I can play frisbee
 
-## How it works
-
-1. App component contains components
-2. Card components receive location from Search component (there are default cities set), which uses a geocoding API to convert city name to latitude and longitude
-3. Card components get weather data from GetWeather function which accesses a weather API, with varying parameters based on location and display mode
-4. Weather information is shown!
-
 ## The app features...
 
 - 3 different display modes
@@ -16,6 +9,13 @@ The weather is important for when I go outside so I know what to wear and if I c
 - Digital clock
 - Comfortable weather-viewing experience
 - Media queries for thinner screens
+
+## How it works
+
+1. App component contains components
+2. Card components receive location from Search component (there are default cities set), which uses a geocoding API to convert city name to latitude and longitude
+3. Card components get weather data from GetWeather function which accesses a weather API, with varying parameters based on location and display mode
+4. Weather information is shown!
 
 ## What I did
 
