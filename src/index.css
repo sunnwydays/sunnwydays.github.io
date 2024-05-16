@@ -1,68 +1,301 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+/* --rich-black: hsla(218, 58%, 4%, 1);
+--glaucous: hsla(215, 45%, 53%, 1);
+--powder-blue: hsla(210, 63%, 77%, 1);
+--columbia-blue: hsla(212, 53%, 83%, 1);
+--platinum: hsla(191, 17%, 88%, 1); */
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Main */
+#root {
+  --rich-black: hsla(218, 58%, 4%, 1);
+  --glaucous: hsla(215, 45%, 53%, 1);
+  --powder-blue: hsla(210, 63%, 77%, 1);
+  --columbia-blue: hsla(212, 53%, 83%, 0.5);
+  --platinum: hsla(191, 30%, 88%, 1); 
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+body { 
+  margin: 0rem;
+  background-color: var(--platinum);
 }
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
+.main-container {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
+  text-align: center;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Top */
+.top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  flex: 1 1 auto;
+  margin: 1rem auto 0 auto;
+  gap: 3rem;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+/* Search Input */
+.search-container {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+  align-items: center;
+}
+.search-container input {
+  padding: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: 3px solid hsl(218 58% 4% / 30%);
+  border-radius: 1rem;
+}
+.search-container button {
+  padding: 1rem;
+  margin: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--rich-black);
+  background-color: hsl(215, 45%, 75%, 1);
+  border: 3px solid hsl(215, 45%, 53%, 0.3);
+  border-radius: 1rem;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: 0.2s ease-in;
+  &:hover {
+    background-color: hsl(215, 45%, 65%, 1);
+  }
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+/* Clock */
+.clock {
+  display: flex;
+  align-items: center;
+  color: var(--rich-black);
+  font-size: 2rem;
+}
+
+/* Drop-down menu */
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-container button {
+  font-size: 1.5rem;
+  color: hsla(191, 17%, 98%, 1);
+  background-color: hsla(215, 45%, 53%, 1);
+  padding: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  transition: 0.2s;
+}
+.dropdown-container > div {
+  display: none;
+  position: absolute;
+  background-color: hsl(0, 0%, 95%);
+  min-width: 8rem;
+  box-shadow: 0px 0.5rem 0.5rem 0px rgba(0,0,0,0.4);
+  z-index: 1;
+  border-radius: 0.5rem;
+}
+.dropdown-container > div > div {
+  font-size: 1.25rem;
+  color: black;
+  padding: 0.5rem;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+  &:hover {
+    background-color: hsl(0, 0%, 85%);
+    border-radius: 0.5rem;
   }
 }
+.dropdown-container:hover > div {display: block;}
+.dropdown-container:hover button {
+  background-color: hsla(215, 45%, 40%, 1);
+}
+
+/* Error */
+.error-message {
+  background-color: #f44336;
+  color: white;
+  padding: 2rem;
+  margin: 1rem;
+}
+
+/* Footer */
+footer {
+  padding: 1rem;
+  margin: 0.5rem auto; /* Add this line to center the footer */
+  font-size: 0.8rem;
+  background-color: var(--powder-blue);
+  color: var(--rich-black);
+  border-radius: 1rem;
+}
+footer > a {
+  color: var(--rich-black);
+  text-decoration: none;
+  &:hover {
+    color: hsl(218, 58%, 50%);
+  }
+}
+footer div {
+  color: hsl(218, 20%, 50%);
+}
+footer div a {
+  color: hsl(218, 20%, 50%);
+  text-decoration: none;
+  &:hover {
+    color: hsla(218, 58%, 50%, 1);
+  }
+}
+
+/* Cards */
+/* was working on 3 cards for default view but couldn't get consistent formatting */
+.card-row {
+  display: flex;
+  justify-content: center;
+}
+.card-container {
+  /* margin: 0.75rem; */
+  /* padding: 0.5rem 2rem 1.5rem 2rem; */
+  background-color: var(--platinum);
+  border: 2px solid var(--rich-black);
+  border-radius: 1rem;
+  color: var(--rich-black);  
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  box-shadow: 2px 2px 2px hsl(218 58% 4% / 50%);
+  margin: 0.75rem;
+}
+.card-container-day {
+  max-width: 45%;
+}
+.card-container-week {
+  max-width: 95%;
+  margin: 0.75rem auto;
+}
+.card-container h1 {
+  margin: 1.5rem auto 1rem auto; /* IMPORTANT: horizontal auto for this */
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.weather-container {
+  display: flex;
+  margin: 0 3rem 2rem 3rem;
+  justify-content: center;
+  /* border: 1px solid var(--rich-black); */
+}
+.weather-container .temperature {
+  margin: 0.75rem 0; /* good spacing */
+}
+.weather-container .emoji {
+  font-size: 2rem;
+  &:hover {
+    animation: rotate 1s;
+  }
+}
+.weather-container .emoji-space {
+  font-size: 2rem;
+  margin: 1rem 0 1rem 0;
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.detail-container {
+  display: flex;
+  overflow-x: auto; /* Allows for horizontal scrolling */
+}
+.detail-container-day p {margin: 1rem 0.7rem;}
+.detail-container-week p {
+  padding: 0 0.75rem;
+  margin: 1rem 0.75rem;
+}
+.detail-container-detailed p.emoji {
+  margin: 1rem;
+}
+.day-detail-container {
+  background-color: hsla(191, 30%, 91%, 1);
+  border-radius: 0.5rem;
+  margin-right: 1rem;
+}
+
+.label-container {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1rem;
+}
+
+.detail-column {
+  display: flex;
+  flex-direction: column;
+}
+.detail-column p {
+  white-space: nowrap; /* Prevents text from wrapping */ 
+}
+.current-detail-column {
+  font-weight: bold;
+  background-color: hsla(191, 17%, 92%, 1);
+  border-radius: 0.5rem;
+}
+.detail-column-week {
+  display: flex;
+  flex-direction: column;
+  min-width: 8rem;
+}
+.detail-column-detailed {
+  display: flex;
+  flex-direction: column;
+  min-width: 5.5rem;
+}
+
+.day-selection {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  white-space: nowrap;
+  margin-right: 1.5rem;
+}
+.day-selection label {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  /* border: 1px solid black; */
+}
+
+@media screen and (max-width: 900px) {
+  .top {
+    flex-direction: column;
+    gap: 0rem;
+  }
+  .card-row {
+    flex-direction: column;
+  }
+  .card-container {
+    max-width: 95%;
+  }
+}
+@media screen and (max-width: 750px) {
+  .weather-container-detailed {
+    flex-direction: column;
+  }
+  .day-detail-container {
+    margin: 1rem auto;
+  }
+  .label-container-detailed {
+    display: none;
+  }
+}
+.flex {
+  /* make the radio buttons and day weather display inline on small screen */
+  display: flex;
+}
+
+/* So many classes, I should've used more selectors instead and used separate css files for each component */
