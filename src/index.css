@@ -190,21 +190,18 @@ footer div a {
 }
 .weather-container .emoji {
   font-size: 2rem;
+  transition: transform 0.5s ease-in-out;
   &:hover {
-    animation: rotate 1s;
+    animation: grow 1s;
+    transform: scale(1.2);  
+  }
+  &:not(:hover) {
+    transform: scale(0.8);
   }
 }
 .weather-container .emoji-space {
   font-size: 2rem;
   margin: 1rem 0 1rem 0;
-}
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 .detail-container {
