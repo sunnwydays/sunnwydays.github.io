@@ -22,3 +22,9 @@ The weather is important for when I go outside so I know what to wear and if I c
 - Fetched and displayed responsive weather information from APIs with React
 - Implemented properties and relevant hooks for seamless data flow between components
 - Designed a user-friendly interface using HTML and CSS that adapts to varying screen sizes
+
+## Gallery
+
+![Four weather cards in a grid showing hourly weather information, search bar on top](weather-day.png "Day view")
+![Three weather cards showing daily weather information, search bar on top](weather-week "Week view")
+![Three weather cards with radio buttons for day-of-the-week selection, and daily and hourly weather for chosen day](weather-detailed "Detailed view")
