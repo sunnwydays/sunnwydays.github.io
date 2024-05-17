@@ -25,6 +25,6 @@ The weather is important for when I go outside so I know what to wear and if I c
 
 ## Gallery
 
-![Four weather cards in a grid showing hourly weather information, search bar on top](weather-day.png "Day view")
-![Three weather cards showing daily weather information, search bar on top](weather-week "Week view")
-![Three weather cards with radio buttons for day-of-the-week selection, and daily and hourly weather for chosen day](weather-detailed "Detailed view")
+![Four weather cards in a grid showing hourly weather information, search bar on header](weather-day.png "Day view")
+![Three weather cards showing daily weather information, search bar on header](weather-week "Week view")
+![Three weather cards with radio buttons for day-of-the-week selection, and daily and hourly weather for chosen day, search bar and dropdown for view mode selection on header](weather-detailed "Detailed view")
