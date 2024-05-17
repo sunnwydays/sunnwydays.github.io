@@ -21,7 +21,7 @@ export default function Card(props) {
   const dailyPrecipitation = weather.daily.precipitation_sum
   const dailyWind = weather.daily.wind_speed_10m_max
   const dailyDirection = weather.daily.wind_direction_10m_dominant
-  const dailyDuration = weather.daily.daylight_duration
+  const dailyMaxUV = weather.daily.uv_index_max
  
   return (
     <div className="card-container card-container-week">
@@ -35,7 +35,7 @@ export default function Card(props) {
           <p className="temperature">precip</p>
           <p className="temperature">wind</p>
           <p className="temperature">&nbsp;</p>
-          <p className="temperature">daylight</p>          
+          <p className="temperature">max UV</p>          
         </div>
         <div className="detail-container detail-container-week">
           {dailyMax.map((max, index) => (
@@ -47,7 +47,7 @@ export default function Card(props) {
               <p className="temperature">{dailyPrecipitation[index]} mm</p>
               <p className="temperature">{dailyWind[index].toFixed(0)} km/h</p>
               <p className="temperature" style={{ transform: `rotate(${dailyDirection[index]}deg)` }}>⬆️</p>
-              <p className="temperature">{(dailyDuration[index] / 3600).toFixed(1)} h</p>
+              <p className="temperature">{dailyMaxUV[index].toFixed(1)}</p>
             </div>
           ))}
         </div>

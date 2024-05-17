@@ -29,7 +29,7 @@ export default function Card(props) {
   const dailyPrecipitation = weather.daily.precipitation_sum
   const dailyWind = weather.daily.wind_speed_10m_max
   const dailyDirection = weather.daily.wind_direction_10m_dominant  
-  const dailyDuration = weather.daily.daylight_duration
+  const dailyMaxUV = weather.daily.uv_index_max
 
   const hourlyTemperatures = weather.hourly.temperature_2m
   const hourlyApparent = weather.hourly.apparent_temperature
@@ -61,7 +61,7 @@ export default function Card(props) {
               <p className="temperature">{dailyPrecipitation[day]} mm</p>
               <p className="temperature">{dailyWind[day].toFixed(0)} km/h</p>
               <p className="temperature" style={{ transform: `rotate(${dailyDirection[day]}deg)` }}>⬆️</p>
-              <p className="temperature">{(dailyDuration[day] / 3600).toFixed(1)} h</p>
+              <p className="temperature">{dailyMaxUV[day].toFixed(1)} UV</p>
             </div>
           </div>
         </div>
