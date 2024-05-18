@@ -1,4 +1,4 @@
-export default function GetEmoji(code) {
+export default function getEmoji(code) {
     return code === 0 ? "🌞" :
         code === 1 ? "🌤️" :
             code === 2 ? "⛅" :

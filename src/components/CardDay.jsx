@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import GetWeather from './GetWeather';
-import GetEmoji from './GetEmoji';
+import useGetWeather from './useGetWeather';
+import getEmoji from './getEmoji';
 
 export default function Card(props) {
   // console.log("Props",props)
@@ -14,7 +14,10 @@ export default function Card(props) {
     const hours = hour % 12 || 12
     return `${hours} ${meridiem}`
   }
-  GetWeather(props.lat, props.lon, props.city, props.setError, setWeather, props.isLoaded, props.setIsLoaded)
+  // GetWeather(props.lat, props.lon, props.city, props.setError, setWeather, props.isLoaded, props.setIsLoaded)
+  // ^this was using state instead of reducer
+  // cardweek and carddetailed are neater than this because I kept comments
+  useGetWeather(props.dispatch, props.city, props.lat, props.lon, props.isLoaded, setWeather)
   // console.log("bruh", props.city)
   // console.log(props.isLoaded)
   // console.log("trying to get weather for", props.city, props.isLoaded[props.city])
@@ -55,7 +58,7 @@ export default function Card(props) {
               <p >{index === 0 ? "Now" : formatHour(hour + index)}</p>
               <p className="temperature">{Math.round(temp)}°C</p>
               <p className="temperature">{Math.round(hourlyApparent[index])}°C</p>
-              <p className="emoji">{GetEmoji(hourlyCode[index])}</p>
+              <p className="emoji">{getEmoji(hourlyCode[index])}</p>
             </div>
           ))}
         </div>

@@ -20,7 +20,7 @@ The weather is important for when I go outside so I know what to wear and if I c
 ## What I did
 
 - Fetched and displayed responsive weather information from APIs with React
-- Implemented properties and relevant hooks for seamless data flow between components
+- Implemented state control and relevant hooks for seamless data flow between components
 - Designed a user-friendly interface using HTML and CSS that adapts to varying screen sizes
 
 ## Gallery

@@ -1,8 +1,10 @@
 import {useState, useEffect} from 'react'
 
-export default function Search(props) {
+import { ACTIONS } from '../App';
+
+export default function Search( {dispatch, city} ) {
     const [tempCity, setTempCity] = useState('')
-    const geocodeUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${props.city}&count=2&language=en` //doesn't work with count=1 for some reason
+    const geocodeUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=2&language=en` //doesn't work with count=1 for some reason
 
     const handleSearch = async () => {
         if ( tempCity.trim().length > 1 ) {
@@ -11,24 +13,24 @@ export default function Search(props) {
                 .replace(/(?<!,) +/g, '+') // replace spaces not after a comma with a plus
                 .replace(/\s+/g, '') // remove other whitespace
                 .replace(/,/g, '%2C'); // replace commas with %2C
-            props.setCity(formattedCity)
+            dispatch({type: ACTIONS.SET_CITY, payload: formattedCity})
             setTempCity('')
         }
     }
 
-    useEffect(() => {geocode()}, [props.city])
+    useEffect(() => {geocode()}, [city])
 
     const geocode = async () => {
         try {            
             const geocodeRes = await fetch(geocodeUrl)
             if (!geocodeRes.ok) throw new Error('Geocode failed - check city input')
             const geocodeData = await geocodeRes.json()
-            props.setLat(geocodeData.results[0].latitude)
-            props.setLon(geocodeData.results[0].longitude)
-            props.setError(null)
+            dispatch({type: ACTIONS.SET_LAT, payload: geocodeData.results[0].latitude})
+            dispatch({type: ACTIONS.SET_LON, payload: geocodeData.results[0].longitude})
+            dispatch({type: ACTIONS.SET_ERROR, payload: null})
         } catch (error) {
             console.log("Error:", error.message)
-            props.setError(error.message)
+            dispatch({type: ACTIONS.SET_ERROR, payload: error.message})
         }
     }
 

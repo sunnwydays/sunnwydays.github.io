@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import GetWeather from './GetWeather';
-import GetEmoji from './GetEmoji';
+import useGetWeather from './useGetWeather';
+import getEmoji from './getEmoji';
 
 export default function Card(props) {
   const [weather, setWeather] = useState({})
@@ -17,7 +17,7 @@ export default function Card(props) {
   const followingWeekdays = daysOfWeek.slice(currentDayOfWeek, currentDayOfWeek + 7);
   const [day, setDay] = useState(0);
 
-  GetWeather(props.lat, props.lon, props.city, props.setError, setWeather, props.isLoaded, props.setIsLoaded, "detailed")
+  useGetWeather(props.dispatch, props.city, props.lat, props.lon, props.isLoaded, setWeather, "detailed")
 
   if (!props.isLoaded[props.city]) {
     return <p>Loading...</p>;
@@ -28,7 +28,7 @@ export default function Card(props) {
   const dailyCode = weather.daily.weather_code
   const dailyPrecipitation = weather.daily.precipitation_sum
   const dailyWind = weather.daily.wind_speed_10m_max
-  const dailyDirection = weather.daily.wind_direction_10m_dominant  
+  const dailyDirection = weather.daily.wind_direction_10m_dominant
   const dailyMaxUV = weather.daily.uv_index_max
 
   const hourlyTemperatures = weather.hourly.temperature_2m
@@ -57,7 +57,7 @@ export default function Card(props) {
               <p style={{ textDecoration: "underline" }} >{day === 0 ? "Today" : followingWeekdays[day]}</p>
               <p className="temperature">max {Math.round(dailyMax[day])}°C</p>
               <p className="temperature">min {Math.round(dailyMin[day])}°C</p>
-              <p className="emoji">{GetEmoji(dailyCode[day])}</p>
+              <p className="emoji">{getEmoji(dailyCode[day])}</p>
               <p className="temperature">{dailyPrecipitation[day]} mm</p>
               <p className="temperature">{dailyWind[day].toFixed(0)} km/h</p>
               <p className="temperature" style={{ transform: `rotate(${dailyDirection[day]}deg)` }}>⬆️</p>
@@ -65,30 +65,30 @@ export default function Card(props) {
             </div>
           </div>
         </div>
-          <div className="label-container label-container-detailed">
-            <p>&nbsp;</p>
-            <p className="temperature">temp</p>
-            <p className="temperature">feels</p>
-            <p className="emoji-space">&nbsp;</p>
-            <p className="temperature">precip</p>
-            <p className="temperature">wind</p>
-            <p className="temperature">&nbsp;</p>
-            <p className="temperature">humidity</p>
-          </div>
-          <div className="detail-container detail-container-detailed">
-            {hourlyTemperatures.slice(24 * day, 24 * day + 24).map((temp, index) => (
-              <div key={index} className={(index === hour && day === 0) ? "detail-column-detailed current-detail-column" : "detail-column-detailed"}>
-                <p >{(index === hour && day === 0) ? "Now" : formatHour(index)}</p>
-                <p className="temperature">{Math.round(temp)}°C</p>
-                <p className="temperature">{Math.round(hourlyApparent[index + 24 * day])}°C</p>
-                <p className="emoji">{GetEmoji(hourlyCode[index + 24 * day])}</p>
-                <p className="temperature">{hourlyPrecipitation[index + 24 * day]} mm</p>
-                <p className="temperature">{hourlyWind[index + 24 * day].toFixed(0)} km/h</p>
-                <p className="temperature" style={{ transform: `rotate(${hourlyDirection[index + 24 * day]}deg)` }}>⬆️</p>
-                <p className="temperature">{hourlyHumidity[index + 24 * day]}%</p>
-              </div>
-            ))}
-          </div>
+        <div className="label-container label-container-detailed">
+          <p>&nbsp;</p>
+          <p className="temperature">temp</p>
+          <p className="temperature">feels</p>
+          <p className="emoji-space">&nbsp;</p>
+          <p className="temperature">precip</p>
+          <p className="temperature">wind</p>
+          <p className="temperature">&nbsp;</p>
+          <p className="temperature">humidity</p>
+        </div>
+        <div className="detail-container detail-container-detailed">
+          {hourlyTemperatures.slice(24 * day, 24 * day + 24).map((temp, index) => (
+            <div key={index} className={(index === hour && day === 0) ? "detail-column-detailed current-detail-column" : "detail-column-detailed"}>
+              <p >{(index === hour && day === 0) ? "Now" : formatHour(index)}</p>
+              <p className="temperature">{Math.round(temp)}°C</p>
+              <p className="temperature">{Math.round(hourlyApparent[index + 24 * day])}°C</p>
+              <p className="emoji">{getEmoji(hourlyCode[index + 24 * day])}</p>
+              <p className="temperature">{hourlyPrecipitation[index + 24 * day]} mm</p>
+              <p className="temperature">{hourlyWind[index + 24 * day].toFixed(0)} km/h</p>
+              <p className="temperature" style={{ transform: `rotate(${hourlyDirection[index + 24 * day]}deg)` }}>⬆️</p>
+              <p className="temperature">{hourlyHumidity[index + 24 * day]}%</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import GetWeather from './GetWeather';
-import GetEmoji from './GetEmoji';
+import useGetWeather from './useGetWeather';
+import getEmoji from './getEmoji';
 
 export default function Card(props) {
   const [weather, setWeather] = useState({})
@@ -9,7 +9,7 @@ export default function Card(props) {
   const currentDayOfWeek = new Date().getDay();
   const followingWeekdays = daysOfWeek.slice(currentDayOfWeek, currentDayOfWeek + 7);
 
-  GetWeather(props.lat, props.lon, props.city, props.setError, setWeather, props.isLoaded, props.setIsLoaded, "week")
+  useGetWeather(props.dispatch, props.city, props.lat, props.lon, props.isLoaded, setWeather, "week")
 
   if (!props.isLoaded[props.city]) {
     return <p>Loading...</p>;
@@ -22,7 +22,7 @@ export default function Card(props) {
   const dailyWind = weather.daily.wind_speed_10m_max
   const dailyDirection = weather.daily.wind_direction_10m_dominant
   const dailyMaxUV = weather.daily.uv_index_max
- 
+
   return (
     <div className="card-container card-container-week">
       <h1>{props.city.replace(/%2C/g, ', ').replace(/\+/g, ' ')}</h1>
@@ -35,7 +35,7 @@ export default function Card(props) {
           <p className="temperature">precip</p>
           <p className="temperature">wind</p>
           <p className="temperature">&nbsp;</p>
-          <p className="temperature">max UV</p>          
+          <p className="temperature">max UV</p>
         </div>
         <div className="detail-container detail-container-week">
           {dailyMax.map((max, index) => (
@@ -43,7 +43,7 @@ export default function Card(props) {
               <p >{index === 0 ? "Today" : followingWeekdays[index]}</p>
               <p className="temperature">{Math.round(max)}°C</p>
               <p className="temperature">{Math.round(dailyMin[index])}°C</p>
-              <p className="emoji">{GetEmoji(dailyCode[index])}</p>
+              <p className="emoji">{getEmoji(dailyCode[index])}</p>
               <p className="temperature">{dailyPrecipitation[index]} mm</p>
               <p className="temperature">{dailyWind[index].toFixed(0)} km/h</p>
               <p className="temperature" style={{ transform: `rotate(${dailyDirection[index]}deg)` }}>⬆️</p>

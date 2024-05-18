@@ -1,18 +1,20 @@
-export default function Dropdown(props) {
+import { ACTIONS } from "../App";
+
+export default function Dropdown( {dispatch, mode} ) {
   function handleDay() {
-    if (props.mode === "day") return;
-    props.setIsLoaded({});
-    props.setMode("day");
+    if (mode === "day") return;
+    dispatch({ type: ACTIONS.RESET_IS_LOADED });
+    dispatch({ type: ACTIONS.SET_MODE, payload: "day" });
   }
   function handleWeek() {
-    if (props.mode === "week") return;
-    props.setIsLoaded({});
-    props.setMode("week");
+    if (mode === "week") return;
+    dispatch({ type: ACTIONS.RESET_IS_LOADED });
+    dispatch({ type: ACTIONS.SET_MODE, payload: "week" });
   }
   function handleDetailed() {
-    if (props.mode === "detailed") return;
-    props.setIsLoaded({});
-    props.setMode("detailed");
+    if (mode === "detailed") return;
+    dispatch({ type: ACTIONS.RESET_IS_LOADED });
+    dispatch({ type: ACTIONS.SET_MODE, payload: "detailed" });
   }
   return (
     <div className="dropdown-container">
