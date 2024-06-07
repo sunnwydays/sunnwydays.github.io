@@ -152,6 +152,7 @@ footer > a {
   text-decoration: none;
   &:hover {
     color: hsl(218, 58%, 50%);
+    text-decoration: underline;
   }
 }
 footer div {
@@ -162,6 +163,7 @@ footer div a {
   text-decoration: none;
   &:hover {
     color: hsla(218, 58%, 50%, 1);
+    text-decoration: underline;
   }
 }
 
