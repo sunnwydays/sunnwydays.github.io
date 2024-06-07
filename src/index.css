@@ -23,6 +23,24 @@ body {
   text-align: center;
 }
 
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(0, 0%, 92%);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(0, 0%, 70%);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(0, 0%, 55%);
+}
+
+
 /* Top */
 .top {
   display: flex;
