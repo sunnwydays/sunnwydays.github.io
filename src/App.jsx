@@ -67,25 +67,25 @@ export default function App() {
       {state.mode == "day" ? (
         <div>
           <div className="card-row">
-            <CardDay dispatch={dispatch} city={state.city} lat={state.lat} lon={state.lon} isLoaded={state.isLoaded} />
             <CardDay dispatch={dispatch} city={defaultLocations[0].city} lat={defaultLocations[0].lat} lon={defaultLocations[0].lon} isLoaded={state.isLoaded} />
+            <CardDay dispatch={dispatch} city={defaultLocations[1].city} lat={defaultLocations[1].lat} lon={defaultLocations[1].lon} isLoaded={state.isLoaded} />
           </div>
           <div className="card-row">
-            <CardDay dispatch={dispatch} city={defaultLocations[1].city} lat={defaultLocations[1].lat} lon={defaultLocations[1].lon} isLoaded={state.isLoaded} />
+            <CardDay dispatch={dispatch} city={state.city} lat={state.lat} lon={state.lon} isLoaded={state.isLoaded} />
             <CardDay dispatch={dispatch} city={defaultLocations[2].city} lat={defaultLocations[2].lat} lon={defaultLocations[2].lon} isLoaded={state.isLoaded} />
           </div>
         </div>
       ) : state.mode == "week" ? (
         <div>
-          <CardWeek dispatch={dispatch} city={state.city} lat={state.lat} lon={state.lon} isLoaded={state.isLoaded} />
           <CardWeek dispatch={dispatch} city={defaultLocations[0].city} lat={defaultLocations[0].lat} lon={defaultLocations[0].lon} isLoaded={state.isLoaded} />
           <CardWeek dispatch={dispatch} city={defaultLocations[1].city} lat={defaultLocations[1].lat} lon={defaultLocations[1].lon} isLoaded={state.isLoaded} />
+          <CardWeek dispatch={dispatch} city={state.city} lat={state.lat} lon={state.lon} isLoaded={state.isLoaded} />
         </div>
       ) : (
         <div>
-          <CardDetailed dispatch={dispatch} city={state.city} lat={state.lat} lon={state.lon} isLoaded={state.isLoaded} />
           <CardDetailed dispatch={dispatch} city={defaultLocations[0].city} lat={defaultLocations[0].lat} lon={defaultLocations[0].lon} isLoaded={state.isLoaded} />
           <CardDetailed dispatch={dispatch} city={defaultLocations[1].city} lat={defaultLocations[1].lat} lon={defaultLocations[1].lon} isLoaded={state.isLoaded} />
+          <CardDetailed dispatch={dispatch} city={state.city} lat={state.lat} lon={state.lon} isLoaded={state.isLoaded} />
         </div>
       )}
       {state.error && <ErrorMessage error={state.error} />}
