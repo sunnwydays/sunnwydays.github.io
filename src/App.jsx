@@ -45,7 +45,7 @@ export default function App() {
     city: "Ottawa",
     lat: "45.42472",
     lon: "-75.69944",
-    mode: "day",
+    mode: "detailed",
     error: null,
     isLoaded: {}
   }) 
