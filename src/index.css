@@ -262,6 +262,22 @@ footer div a {
   font-size: 1.75rem;
   font-weight: 700;
 }
+.card-remove {
+  margin-left: 0.4rem;
+  padding: 0 0.4rem;
+  font-size: 1.4rem;
+  line-height: 1;
+  vertical-align: middle;
+  color: var(--muted);
+  background: none;
+  border: none;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  &:hover {
+    color: var(--text);
+    background: var(--panel);
+  }
+}
 .card-subtitle {
   margin: 0.25rem 0 0 0;
   font-size: 0.85rem;

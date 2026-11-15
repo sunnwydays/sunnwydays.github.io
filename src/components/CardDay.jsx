@@ -3,10 +3,10 @@ import getEmoji from './getEmoji';
 import NowSummary, { CardHeader, CardStatus } from './NowSummary';
 import { formatHour, nowIndex } from './weatherUtils';
 
-export default function Card({ location, refreshKey }) {
+export default function Card({ location, refreshKey, onRemove }) {
   const { weather, aqi, error, updated } = useGetWeather(location.lat, location.lon, refreshKey)
 
-  if (!weather) return <CardStatus name={location.name} error={error} className="card-container-day" />
+  if (!weather) return <CardStatus name={location.name} onRemove={onRemove} error={error} className="card-container-day" />
 
   // next 24 hours starting now (in the city's own time), instead of only what's left of today
   const start = nowIndex(weather)
@@ -15,7 +15,7 @@ export default function Card({ location, refreshKey }) {
 
   return (
     <div className="card-container card-container-day">
-      <CardHeader name={location.name} weather={weather} updated={updated} error={error} />
+      <CardHeader name={location.name} onRemove={onRemove} weather={weather} updated={updated} error={error} />
       <NowSummary weather={weather} aqi={aqi} />
       <div className="weather-container">
         <div className="label-container">

@@ -18,11 +18,14 @@ function useMinuteTick() {
   }, [])
 }
 
-export function CardHeader({ name, weather, updated, error }) {
+export function CardHeader({ name, weather, updated, error, onRemove }) {
   useMinuteTick()
   return (
     <div className="card-header">
-      <h1>{name}</h1>
+      <h1>
+        {name}
+        {onRemove && <button className="card-remove" onClick={onRemove} title="Clear search" aria-label="Clear search">×</button>}
+      </h1>
       {weather && (
         <p className="card-subtitle">
           {cityTime(weather.utc_offset_seconds)} local
@@ -35,10 +38,10 @@ export function CardHeader({ name, weather, updated, error }) {
 }
 
 // shown instead of a card while loading or if the first fetch failed
-export function CardStatus({ name, error, className }) {
+export function CardStatus({ name, error, className, onRemove }) {
   return (
     <div className={`card-container ${className}`}>
-      <CardHeader name={name} />
+      <CardHeader name={name} onRemove={onRemove} />
       <p className={error ? "card-status card-status-error" : "card-status"}>
         {error ? `Couldn't load weather: ${error}` : "Loading..."}
       </p>

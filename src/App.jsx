@@ -10,13 +10,15 @@ import ErrorMessage from './components/ErrorMessage';
 import Footer from './components/Footer';
 import { ACTIONS } from './actions';
 
-const DEFAULT_SEARCH = { name: "Ottawa, Ontario, CA", lat: 45.42472, lon: -75.69944 }
-
+// shown in this order when I haven't searched anything (week/detailed show the first 3, day shows 4)
 const defaultLocations = [
   { name: "Toronto", lat: 43.661885, lon: -79.3945 },
   { name: "Markham", lat: 43.8599, lon: -79.335 },
+  { name: "Ottawa", lat: 45.42472, lon: -75.69944 },
   { name: "Amsterdam", lat: 52.3676, lon: 4.9041 }
 ];
+
+const samePlace = (a, b) => Math.abs(a.lat - b.lat) < 0.05 && Math.abs(a.lon - b.lon) < 0.05
 
 // remember the last searched city and view between visits
 // (localStorage can throw in private windows, so it's wrapped)
@@ -49,13 +51,13 @@ const reducer = (state, action) => {
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, null, () => ({
-    location: load("location", DEFAULT_SEARCH),
+    location: load("searched", null), // null until I search something
     mode: load("mode", "detailed"),
     error: null,
     refreshKey: 0
   }))
 
-  useEffect(() => save("location", state.location), [state.location])
+  useEffect(() => save("searched", state.location), [state.location])
   useEffect(() => save("mode", state.mode), [state.mode])
 
   // keep the weather fresh if the tab stays open: check every 15 min and whenever I come back to the tab
@@ -73,7 +75,21 @@ export default function App() {
   }, [])
 
   const Card = state.mode === "day" ? CardDay : state.mode === "week" ? CardWeek : CardDetailed
-  const card = (location) => <Card key={`${state.mode}-${location.lat},${location.lon}`} location={location} refreshKey={state.refreshKey} />
+  const clearSearch = () => dispatch({ type: ACTIONS.SET_LOCATION, payload: null })
+
+  // searched city (or my location) goes first, then the defaults without any duplicate of it
+  const locations = state.location
+    ? [state.location, ...defaultLocations.filter(place => !samePlace(place, state.location))]
+    : defaultLocations
+  const shown = locations.slice(0, state.mode === "day" ? 4 : 3)
+  const cards = shown.map(location => (
+    <Card
+      key={`${state.mode}-${location.lat},${location.lon}`}
+      location={location}
+      refreshKey={state.refreshKey}
+      onRemove={location === state.location ? clearSearch : null}
+    />
+  ))
 
   return (
     <div className="main-container">
@@ -85,21 +101,11 @@ export default function App() {
       {state.error && <ErrorMessage error={state.error} dispatch={dispatch} />}
       {state.mode === "day" ? (
         <div>
-          <div className="card-row">
-            {card(defaultLocations[0])}
-            {card(defaultLocations[1])}
-          </div>
-          <div className="card-row">
-            {card(state.location)}
-            {card(defaultLocations[2])}
-          </div>
+          <div className="card-row">{cards.slice(0, 2)}</div>
+          <div className="card-row">{cards.slice(2, 4)}</div>
         </div>
       ) : (
-        <div>
-          {card(defaultLocations[0])}
-          {card(defaultLocations[1])}
-          {card(state.location)}
-        </div>
+        <div>{cards}</div>
       )}
       <Footer />
     </div>

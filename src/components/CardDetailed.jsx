@@ -5,7 +5,7 @@ import getEmoji from './getEmoji';
 import NowSummary, { CardHeader, CardStatus } from './NowSummary';
 import { formatClock, formatHour, nowIndex, weekday, windArrowStyle } from './weatherUtils';
 
-export default function Card({ location, refreshKey }) {
+export default function Card({ location, refreshKey, onRemove }) {
   const { weather, aqi, error, updated } = useGetWeather(location.lat, location.lon, refreshKey)
   const [day, setDay] = useState(0);
   const hourlyRef = useRef(null)
@@ -21,7 +21,7 @@ export default function Card({ location, refreshKey }) {
     if (target) container.scrollLeft += target.getBoundingClientRect().left - container.getBoundingClientRect().left - 8
   }, [day, nowHour, weather])
 
-  if (!weather) return <CardStatus name={location.name} error={error} className="card-container-week" />
+  if (!weather) return <CardStatus name={location.name} onRemove={onRemove} error={error} className="card-container-week" />
 
   const { daily, hourly } = weather
   const days = daily.time.slice(0, 7)
@@ -29,7 +29,7 @@ export default function Card({ location, refreshKey }) {
 
   return (
     <div className="card-container card-container-week">
-      <CardHeader name={location.name} weather={weather} updated={updated} error={error} />
+      <CardHeader name={location.name} onRemove={onRemove} weather={weather} updated={updated} error={error} />
       <NowSummary weather={weather} aqi={aqi} />
       <div className="weather-container weather-container-detailed">
         <div className="flex">
