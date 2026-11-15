@@ -1,64 +1,40 @@
-import { useState } from 'react'
-
 import useGetWeather from './useGetWeather';
 import getEmoji from './getEmoji';
+import NowSummary, { CardHeader, CardStatus } from './NowSummary';
+import { formatHour, nowIndex } from './weatherUtils';
 
-export default function Card(props) {
-  // console.log("Props",props)
-  // const [loading, setLoading] = useState(true)
-  const [weather, setWeather] = useState({})
-  const currentTime = new Date();
-  const hour = currentTime.getHours();
-  const formatHour = (hour) => {
-    const meridiem = hour < 12 ? "AM" : "PM"
-    const hours = hour % 12 || 12
-    return `${hours} ${meridiem}`
-  }
-  // GetWeather(props.lat, props.lon, props.city, props.setError, setWeather, props.isLoaded, props.setIsLoaded)
-  // ^this was using state instead of reducer
-  // cardweek and carddetailed are neater than this because I kept comments
-  useGetWeather(props.dispatch, props.city, props.lat, props.lon, props.isLoaded, setWeather)
-  // console.log("bruh", props.city)
-  // console.log(props.isLoaded)
-  // console.log("trying to get weather for", props.city, props.isLoaded[props.city])
+export default function Card({ location, refreshKey }) {
+  const { weather, aqi, error, updated } = useGetWeather(location.lat, location.lon, refreshKey)
 
-  // useEffect(() => {
-  //   if (!props.fetched[props.city]) {
-  //     GetWeather(props.lat, props.lon, setLoading, props.setError)
-  //     props.setFetched({ ...props.fetched, [props.prevCity]: false, [props.city]: true })
-  //   }
-  // }, [props.fetched[props.city], props.lat, props.lon, setLoading, props.setError])  
+  if (!weather) return <CardStatus name={location.name} error={error} className="card-container-day" />
 
-  // useEffect(() => {
-  //   setLoading(true)
-  // }, [props.lat, props.lon])
-
-  if (!props.isLoaded[props.city]) {
-    // console.log("Loading...", props.city)
-    return <p>Loading...</p>;
-  }
-
-  const hourlyTemperatures = weather.hourly.temperature_2m.slice(hour)
-  const hourlyApparent = weather.hourly.apparent_temperature.slice(hour)
-  const hourlyCode = weather.hourly.weather_code.slice(hour)
+  // next 24 hours starting now (in the city's own time), instead of only what's left of today
+  const start = nowIndex(weather)
+  const hours = Array.from({ length: 24 }, (_, i) => start + i)
+  const { hourly } = weather
 
   return (
     <div className="card-container card-container-day">
-      {/* {console.log(props.city)} */}
-      <h1>{props.city.replace(/%2C/g, ', ').replace(/\+/g, ' ')}</h1>
+      <CardHeader name={location.name} weather={weather} updated={updated} error={error} />
+      <NowSummary weather={weather} aqi={aqi} />
       <div className="weather-container">
         <div className="label-container">
           <p>&nbsp;</p>
+          <p className="emoji-space">&nbsp;</p>
           <p className="temperature">temp</p>
           <p className="temperature">feels</p>
+          <p className="temperature">rain</p>
         </div>
         <div className="detail-container detail-container-day">
-          {hourlyTemperatures.map((temp, index) => (
-            <div key={index} className={index === 0 ? "detail-column current-detail-column" : "detail-column"}>
-              <p >{index === 0 ? "Now" : formatHour(hour + index)}</p>
-              <p className="temperature">{Math.round(temp)}°C</p>
-              <p className="temperature">{Math.round(hourlyApparent[index])}°C</p>
-              <p className="emoji">{getEmoji(hourlyCode[index])}</p>
+          {hours.map((i, index) => (
+            <div key={i} className={index === 0 ? "detail-column current-detail-column" : "detail-column"}>
+              <p>{index === 0 ? "Now" : formatHour(Number(hourly.time[i].slice(11, 13)))}</p>
+              <p className="emoji">{getEmoji(hourly.weather_code[i], hourly.is_day[i])}</p>
+              <p className="temperature">{Math.round(hourly.temperature_2m[i])}°</p>
+              <p className="temperature muted">{Math.round(hourly.apparent_temperature[i])}°</p>
+              <p className={hourly.precipitation_probability[i] >= 50 ? "temperature rain-high" : "temperature muted"}>
+                {hourly.precipitation_probability[i]}%
+              </p>
             </div>
           ))}
         </div>

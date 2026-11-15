@@ -1,11 +1,12 @@
-export default function ErrorMessage({ error }) {
+import { ACTIONS } from '../actions';
+
+export default function ErrorMessage({ error, dispatch }) {
     return (
         <div className="error-message">
-            ERROR: {error}.<br/>
-            Check spelling and special characters.<br/>
-            Also try being more specific for cities with same name<br/>
-            (e.g. "London, Canada" instead of "London").<br/>
-            2 character input only returns exact location.
+            <button className="error-close" onClick={() => dispatch({ type: ACTIONS.SET_ERROR, payload: null })} aria-label="Dismiss">×</button>
+            <strong>{error}.</strong><br />
+            Check spelling, or add the province/country for cities with the same name
+            (e.g. &quot;London, Canada&quot; instead of &quot;London&quot;).
         </div>
     )
 }

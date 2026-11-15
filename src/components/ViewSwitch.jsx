@@ -1,29 +1,25 @@
-import { ACTIONS } from "../App";
+import { ACTIONS } from "../actions";
 
-export default function Dropdown( {dispatch, mode} ) {
-  function handleDay() {
-    if (mode === "day") return;
-    dispatch({ type: ACTIONS.RESET_IS_LOADED });
-    dispatch({ type: ACTIONS.SET_MODE, payload: "day" });
-  }
-  function handleWeek() {
-    if (mode === "week") return;
-    dispatch({ type: ACTIONS.RESET_IS_LOADED });
-    dispatch({ type: ACTIONS.SET_MODE, payload: "week" });
-  }
-  function handleDetailed() {
-    if (mode === "detailed") return;
-    dispatch({ type: ACTIONS.RESET_IS_LOADED });
-    dispatch({ type: ACTIONS.SET_MODE, payload: "detailed" });
-  }
+// was a hover dropdown, which is awkward on phones; now three buttons that are always visible
+const MODES = [
+  { value: "day", label: "Day" },
+  { value: "week", label: "Week" },
+  { value: "detailed", label: "Detailed" }
+]
+
+export default function ViewSwitch({ dispatch, mode }) {
   return (
-    <div className="dropdown-container">
-      <button>View</button>
-      <div>
-        <div onClick={handleDay}>Day</div>
-        <div onClick={handleWeek}>Week</div>
-        <div onClick={handleDetailed}>Detailed</div>
-      </div>
+    <div className="view-switch" role="group" aria-label="View">
+      {MODES.map(({ value, label }) => (
+        <button
+          key={value}
+          className={mode === value ? "active" : null}
+          aria-pressed={mode === value}
+          onClick={() => dispatch({ type: ACTIONS.SET_MODE, payload: value })}
+        >
+          {label}
+        </button>
+      ))}
     </div>
   );
 }

@@ -22,6 +22,7 @@ export default function DigitalClock() {
     return (
         <div className="clock">
             <span>{formatTime()}</span>
+            <span className="clock-date">{time.toLocaleDateString([], { weekday: "long", month: "short", day: "numeric" })}</span>
         </div>
     )
 }

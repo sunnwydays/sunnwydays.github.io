@@ -5,214 +5,355 @@
 --platinum: hsla(191, 17%, 88%, 1); */
 
 /* Main */
-#root {
+:root {
   --rich-black: hsla(218, 58%, 4%, 1);
   --glaucous: hsla(215, 45%, 53%, 1);
   --powder-blue: hsla(210, 63%, 77%, 1);
   --columbia-blue: hsla(212, 53%, 83%, 0.5);
-  --platinum: hsla(191, 30%, 88%, 1); 
-  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --platinum: hsla(191, 30%, 88%, 1);
+
+  /* derived colours, swapped in dark mode */
+  --bg: linear-gradient(180deg, hsl(205, 60%, 90%) 0%, var(--platinum) 40rem);
+  --text: var(--rich-black);
+  --muted: hsl(218, 15%, 42%);
+  --card: hsla(0, 0%, 100%, 0.7);
+  --card-border: hsla(218, 40%, 30%, 0.12);
+  --panel: hsla(205, 50%, 94%, 1);
+  --highlight: hsla(210, 70%, 88%, 1);
+  --accent: var(--glaucous);
+  --accent-text: hsl(0, 0%, 100%);
+  --shadow: 0 4px 16px hsla(218, 58%, 4%, 0.08);
+  --rain: hsl(212, 80%, 42%);
+
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color-scheme: light;
 }
-body { 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: linear-gradient(180deg, hsl(218, 45%, 12%) 0%, hsl(218, 40%, 8%) 40rem);
+    --text: hsl(210, 30%, 92%);
+    --muted: hsl(212, 18%, 65%);
+    --card: hsla(218, 35%, 16%, 0.85);
+    --card-border: hsla(210, 40%, 80%, 0.1);
+    --panel: hsla(218, 30%, 21%, 1);
+    --highlight: hsla(215, 40%, 30%, 1);
+    --accent: hsl(215, 55%, 58%);
+    --shadow: 0 4px 16px hsla(0, 0%, 0%, 0.3);
+    --rain: hsl(205, 90%, 70%);
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+body {
   margin: 0rem;
+  min-height: 100vh;
+  background: var(--bg);
   background-color: var(--platinum);
+  color: var(--text);
+}
+@media (prefers-color-scheme: dark) {
+  body { background-color: hsl(218, 40%, 8%); }
 }
 .main-container {
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   text-align: center;
+  padding: 0 0.5rem;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
-  height: 12px;
+  height: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: hsl(0, 0%, 92%);
-  border-radius: 5px;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: hsl(0, 0%, 70%);
+  background: hsla(218, 20%, 50%, 0.35);
   border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(0, 0%, 55%);
+  background: hsla(218, 20%, 50%, 0.6);
 }
-
 
 /* Top */
 .top {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
-  flex: 1 1 auto;
-  margin: 1rem auto 0 auto;
-  gap: 3rem;
+  flex-wrap: wrap;
+  margin: 1.25rem auto 0.5rem auto;
+  gap: 1.5rem 2.5rem;
 }
 
 /* Search Input */
 .search-container {
   display: flex;
-  flex: 1 1 auto;
+  max-width: 100%;
   justify-content: center;
   align-items: center;
+  gap: 0.5rem;
 }
 .search-container input {
-  padding: 1rem;
-  font-size: 1.5rem;
-  font-weight: bold;
-  border: 3px solid hsl(218 58% 4% / 30%);
-  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--card);
+  border: 2px solid var(--card-border);
+  border-radius: 0.75rem;
+  outline: none;
+  transition: border-color 0.2s;
+  &:focus {
+    border-color: var(--accent);
+  }
 }
 .search-container button {
-  padding: 1rem;
-  margin: 0.5rem;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--rich-black);
-  background-color: hsl(215, 45%, 75%, 1);
-  border: 3px solid hsl(215, 45%, 53%, 0.3);
-  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--accent-text);
+  background-color: var(--accent);
+  border: none;
+  border-radius: 0.75rem;
   cursor: pointer;
-  transition: 0.2s ease-in;
+  transition: filter 0.2s;
   &:hover {
-    background-color: hsl(215, 45%, 65%, 1);
+    filter: brightness(0.9);
   }
+  &:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+}
+.search-container .icon-button {
+  background: var(--card);
+  border: 2px solid var(--card-border);
+  padding: 0.6rem 0.75rem;
 }
 
 /* Clock */
 .clock {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  color: var(--rich-black);
+  color: var(--text);
   font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+.clock-date {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--muted);
 }
 
-/* Drop-down menu */
-.dropdown-container {
-  position: relative;
-  display: inline-block;
+/* View switch (used to be the drop-down menu) */
+.view-switch {
+  display: inline-flex;
+  padding: 0.25rem;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 0.75rem;
 }
-.dropdown-container button {
-  font-size: 1.5rem;
-  color: hsla(191, 17%, 98%, 1);
-  background-color: hsla(215, 45%, 53%, 1);
-  padding: 1rem;
+.view-switch button {
+  font-size: 1.1rem;
+  padding: 0.6rem 1rem;
+  color: var(--text);
+  background: none;
   border: none;
-  border-radius: 0.5rem;
-  transition: 0.2s;
-}
-.dropdown-container > div {
-  display: none;
-  position: absolute;
-  background-color: hsl(0, 0%, 95%);
-  min-width: 8rem;
-  box-shadow: 0px 0.5rem 0.5rem 0px rgba(0,0,0,0.4);
-  z-index: 1;
-  border-radius: 0.5rem;
-}
-.dropdown-container > div > div {
-  font-size: 1.25rem;
-  color: black;
-  padding: 0.5rem;
-  text-decoration: none;
-  display: block;
+  border-radius: 0.55rem;
   cursor: pointer;
+  transition: background-color 0.2s;
   &:hover {
-    background-color: hsl(0, 0%, 85%);
-    border-radius: 0.5rem;
+    background-color: var(--panel);
   }
-}
-.dropdown-container:hover > div {display: block;}
-.dropdown-container:hover button {
-  background-color: hsla(215, 45%, 40%, 1);
+  &.active {
+    color: var(--accent-text);
+    background-color: var(--accent);
+  }
 }
 
 /* Error */
 .error-message {
-  background-color: #f44336;
+  position: relative;
+  max-width: 40rem;
+  background-color: #e5483b;
   color: white;
-  padding: 2rem;
-  margin: 1rem;
+  padding: 1rem 2.5rem;
+  margin: 0.75rem auto;
+  border-radius: 0.75rem;
+  line-height: 1.5;
+}
+.error-close {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.6rem;
+  font-size: 1.5rem;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 /* Footer */
 footer {
-  padding: 1rem;
-  margin: 0.5rem auto; /* Add this line to center the footer */
+  padding: 1rem 1.5rem;
+  margin: 0.5rem auto 1.5rem auto;
   font-size: 0.8rem;
-  background-color: var(--powder-blue);
-  color: var(--rich-black);
+  line-height: 1.6;
+  background-color: var(--card);
+  border: 1px solid var(--card-border);
+  color: var(--text);
   border-radius: 1rem;
 }
 footer > a {
-  color: var(--rich-black);
+  color: var(--text);
   text-decoration: none;
   &:hover {
-    color: hsl(218, 58%, 50%);
+    color: var(--accent);
     text-decoration: underline;
   }
 }
 footer div {
-  color: hsl(218, 20%, 50%);
+  margin-top: 0.5rem;
+  color: var(--muted);
 }
 footer div a {
-  color: hsl(218, 20%, 50%);
+  color: var(--muted);
   text-decoration: none;
   &:hover {
-    color: hsla(218, 58%, 50%, 1);
+    color: var(--accent);
     text-decoration: underline;
   }
 }
 
 /* Cards */
-/* was working on 3 cards for default view but couldn't get consistent formatting */
 .card-row {
   display: flex;
   justify-content: center;
 }
 .card-container {
-  /* margin: 0.75rem; */
-  /* padding: 0.5rem 2rem 1.5rem 2rem; */
-  background-color: var(--platinum);
-  border: 2px solid var(--rich-black);
-  border-radius: 1rem;
-  color: var(--rich-black);  
+  background-color: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 1.25rem;
+  color: var(--text);
   display: flex;
-  flex: 1 1 auto;
+  flex: 1 1 0;
   flex-direction: column;
-  box-shadow: 2px 2px 2px hsl(218 58% 4% / 50%);
+  min-width: 0;
+  box-shadow: var(--shadow);
   margin: 0.75rem;
+  padding: 1.25rem 1.5rem 1.5rem 1.5rem;
+  backdrop-filter: blur(6px);
 }
 .card-container-day {
-  max-width: 45%;
+  max-width: 48%;
 }
 .card-container-week {
-  max-width: 95%;
+  width: 100%;
+  max-width: 1200px;
   margin: 0.75rem auto;
 }
-.card-container h1 {
-  margin: 1.5rem auto 1rem auto; /* IMPORTANT: horizontal auto for this */
-  font-size: 2rem;
-  font-weight: bold;
+.card-header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
 }
+.card-subtitle {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.card-subtitle .stale { color: #e5483b; }
+.card-status {
+  margin: 2rem 0;
+  color: var(--muted);
+}
+.card-status-error { color: #e5483b; }
 
+/* Current conditions summary */
+.now {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem 2rem;
+  margin: 1rem 0 1.25rem 0;
+}
+.now-main {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: left;
+}
+.now-emoji { font-size: 3.5rem; }
+.now-temp {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.now-desc { color: var(--muted); }
+.now-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  gap: 0.5rem 1.25rem;
+  flex: 1 1 min(24rem, 100%);
+  min-width: 0;
+  max-width: 44rem;
+  text-align: left;
+  font-weight: 600;
+}
+.now-stats span {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+.now-stats .arrow { display: inline-block; font-size: 1rem; }
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+.chip {
+  padding: 0.3rem 0.75rem;
+  font-size: 0.85rem;
+  border-radius: 999px;
+  background: var(--panel);
+}
+.chip-wear { background: var(--highlight); }
+.chip-rain { background: hsla(212, 80%, 55%, 0.2); }
+.chip-wind { background: hsla(180, 50%, 45%, 0.2); }
+.chip-uv { background: hsla(40, 95%, 55%, 0.25); }
+.chip-temp { background: hsla(280, 50%, 60%, 0.2); }
+.chip-air { background: hsla(0, 70%, 60%, 0.2); }
+.chip-good { background: hsla(140, 55%, 45%, 0.2); }
+
+/* Hourly / daily tables: every row is the same height so labels line up with the columns */
 .weather-container {
   display: flex;
-  margin: 0 3rem 2rem 3rem;
   justify-content: center;
-  /* border: 1px solid var(--rich-black); */
+  min-width: 0;
 }
-.weather-container .temperature {
-  margin: 0.75rem 0; /* good spacing */
+.weather-container p {
+  margin: 0;
+  height: 2rem;
+  line-height: 2rem;
+  white-space: nowrap;
 }
-.weather-container .emoji {
-  font-size: 2rem;
-  &:hover {
-    animation: rotate 1s;
-  }
+.weather-container .emoji,
+.weather-container .emoji-space {
+  height: 2.75rem;
+  line-height: 2.75rem;
+  font-size: 1.75rem;
+}
+.weather-container .emoji:hover {
+  animation: rotate 1s;
 }
 @keyframes rotate {
   from {
@@ -222,100 +363,158 @@ footer div a {
     transform: rotate(360deg);
   }
 }
-.weather-container .emoji-space {  
-  font-size: 2rem;
-  margin: 1rem 0 1rem 0;
+.weather-container .muted { color: var(--muted); }
+.weather-container .rain-high {
+  color: var(--rain);
+  font-weight: 700;
+}
+.arrow {
+  display: inline-block;
+  font-weight: 700;
 }
 
 .detail-container {
   display: flex;
   overflow-x: auto; /* Allows for horizontal scrolling */
+  padding-bottom: 0.25rem;
 }
-.detail-container-day p {margin: 1rem 0.7rem;}
-.detail-container-week p {
-  padding: 0 0.75rem;
-  margin: 1rem 0.75rem;
+.detail-column,
+.detail-column-week,
+.detail-column-detailed {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  padding: 0.5rem 0;
+  border-radius: 0.75rem;
 }
-.detail-container-detailed p.emoji {
-  margin: 1rem;
+.detail-column { min-width: 4.25rem; }
+.detail-column-week { min-width: 6.5rem; }
+.detail-column-detailed { min-width: 4.5rem; }
+.current-detail-column {
+  font-weight: bold;
+  background-color: var(--highlight);
 }
-.day-detail-container {
-  background-color: hsla(191, 30%, 91%, 1);
-  border-radius: 0.5rem;
-  margin-right: 1rem;
-}
+.past { opacity: 0.45; }
 
 .label-container {
   display: flex;
   flex-direction: column;
-  margin-right: 1rem;
-}
-
-.detail-column {
-  display: flex;
-  flex-direction: column;
-}
-.detail-column p {
-  white-space: nowrap; /* Prevents text from wrapping */ 
-}
-.current-detail-column {
-  font-weight: bold;
-  background-color: hsla(191, 17%, 92%, 1);
-  border-radius: 0.5rem;
-}
-.detail-column-week {
-  display: flex;
-  flex-direction: column;
-  min-width: 8rem;
-}
-.detail-column-detailed {
-  display: flex;
-  flex-direction: column;
-  min-width: 5.5rem;
-}
-
-.day-selection {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  white-space: nowrap;
-  margin-right: 1.5rem;
-}
-.day-selection label {
-  display: flex;
-  align-items: center;
+  flex-shrink: 0;
   padding: 0.5rem 0;
-  cursor: pointer;
-  /* border: 1px solid black; */
+  margin-right: 0.75rem;
+  text-align: right;
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 
-@media screen and (max-width: 900px) {
-  .top {
-    flex-direction: column;
-    gap: 0rem;
-  }
-  .card-row {
-    flex-direction: column;
-  }
-  .card-container {
-    max-width: 95%;
-  }
+.range-bar {
+  position: relative;
+  display: inline-block;
+  width: 70%;
+  height: 0.4rem;
+  vertical-align: middle;
+  border-radius: 999px;
+  background: var(--panel);
 }
-@media screen and (max-width: 750px) {
-  .weather-container-detailed {
-    flex-direction: column;
-  }
-  .day-detail-container {
-    margin: 1rem auto;
-  }
-  .label-container-detailed {
-    display: none;
-  }
+.range-bar span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, hsl(205, 75%, 60%), hsl(30, 90%, 60%));
+}
+
+/* Detailed view */
+.weather-container-detailed {
+  gap: 1rem;
+  align-items: flex-start;
 }
 .flex {
   /* make the radio buttons and day weather display inline on small screen */
   display: flex;
+  flex-shrink: 0;
+  gap: 0.75rem;
+}
+.day-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  white-space: nowrap;
+}
+.day-selection label {
+  padding: 0.45rem 0.9rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: var(--panel);
+  }
+  &.selected {
+    color: var(--accent-text);
+    background-color: var(--accent);
+    font-weight: 600;
+  }
+}
+.day-selection input {
+  /* hidden but still keyboard-accessible */
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.day-selection label:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+}
+.day-detail-container {
+  background-color: var(--panel);
+  border-radius: 0.75rem;
+}
+.day-detail-container .detail-column-week {
+  min-width: 11rem;
+  padding: 0.5rem 1rem;
+}
+.day-title { font-weight: 700; }
+.hourly-wrap {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+@media screen and (max-width: 900px) {
+  .card-row {
+    flex-direction: column;
+    align-items: center;
+  }
+  .card-container,
+  .card-container-day {
+    width: 100%;
+    max-width: 100%;
+    margin: 0.5rem 0;
+  }
+  .weather-container-detailed {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .flex { justify-content: center; }
+}
+@media screen and (max-width: 600px) {
+  .card-container { padding: 1rem 0.75rem; }
+  .search-container input {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: 10rem;
+    font-size: 1.1rem;
+  }
+  .search-container button { font-size: 1.1rem; }
+  .now-stats { grid-template-columns: repeat(2, 1fr); }
+  .now-emoji { font-size: 2.75rem; }
+  .now-temp { font-size: 2.5rem; }
+  .label-container { font-size: 0.8rem; margin-right: 0.25rem; }
+  .flex { flex-direction: column; }
+  .day-selection {
+    flex-direction: row;
+    overflow-x: auto;
+  }
 }
 
 /* So many classes, I should've used more selectors instead and used separate css files for each component */
